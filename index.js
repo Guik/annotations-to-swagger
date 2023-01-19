@@ -1,5 +1,20 @@
 'use strict';
 
+  /* Scan js files in the current directory and generate an openapi.json file
+  * Then generate the swagger documentation using swagger-to-static
+
+  * @param {string} serviceName - The name of the service
+  * @param {string} description - The description of the service
+  * @param {string} servers - The servers of the service (comma separated)
+  * 
+  * Usage: node index.js <serviceName> <description> <servers>
+  * 
+  * Example: node index.js myService "This is a description of my service" "https://example.com/dev,https://example.com/prod"
+  * 
+  * The generated openapi.json file & swagger will be located in the docs folder
+  * 
+  */
+
 var docsPath = __dirname + '/docs';
 
 const fs = require('fs');
