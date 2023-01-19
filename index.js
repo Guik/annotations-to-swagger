@@ -6,7 +6,6 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 const { exec } = require("child_process");
-
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
 var args = process.argv.slice(2);
@@ -18,6 +17,12 @@ if (args.length === 0) {
 }
 var serviceName = args[0]
 var description = args[1] || "No description"
+var servers = args[2] || "https://example.com/dev"
+servers = servers.split(',').map(function (item) {
+  return {
+    url: item
+  }
+})
 
 const options = {
   info: {
@@ -26,20 +31,11 @@ const options = {
     description: description
   },
   baseDir: __dirname,  // Base directory which we use to locate your JSDOC files
-  filesPattern: ['./index.js'],  // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
+  filesPattern: ['./*.js'],  // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
   swaggerUIPath: '/docs',  // URL where SwaggerUI will be rendered
   exposeSwaggerUI: true,   // Expose OpenAPI UI
   exposeApiDocs: false,   // Expose Open API JSON Docs documentation in `apiDocsPath` path.
-  servers: [
-    {
-      "url": "https://"+serviceName+".lambda.randi.adswizz.com/dev",
-      "description": "Development server"
-    },
-    {
-      "url": "https://"+serviceName+".lambda.randi.adswizz.com/prod",
-      "description": "Production server"
-    }
-  ]
+  servers: servers
 };
 
 const listener = expressJSDocSwagger(app)(options);
