@@ -1,13 +1,16 @@
 {
   "name": "annotations-to-swagger",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Scan js files in the current directory, look for annotations based on the JSDoc format (https://brikev.github.io/express-jsdoc-swagger-docs) - generate an openapi.json file - generate a swagger documentation UI (based on openapi.json using swagger-to-static)",
   "main": "index.js",
   "dependencies": {
     "express-jsdoc-swagger": "^1.8.0",
     "swagger-to-static": "^1.1.0"
-  },
-  "devDependencies": {},
+  },  
+  "bundledDependencies": [
+    "express-jsdoc-swagger",
+    "swagger-to-static"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
