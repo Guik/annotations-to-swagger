@@ -1,6 +1,7 @@
 'use strict';
 
-  /* Scan js files in the current directory and generate an openapi.json file
+  /* 
+  * Scan js files in the current directory and generate an openapi.json file
   * Then generate the swagger documentation using swagger-to-static
 
   * @param {string} serviceName - The name of the service
@@ -34,7 +35,7 @@ var applicationPath = findRootApplicationPath();
 var serviceName = args[0]
 var description = args[1] || "No description"
 var servers = args[2] || "https://example.com/dev"
-var destinationPath = applicationPath+(args[3] || "docs")
+var destinationPath = applicationPath+(args[3] || "/docs")
 
 var PATH_TO_JSON = destinationPath + '/openapi.json';
 
