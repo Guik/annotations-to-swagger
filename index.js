@@ -3,6 +3,7 @@
   /* Scan js files in the current directory and generate an openapi.json file
   * Then generate the swagger documentation using swagger-to-static
 
+  * @param {string} destinationPath - The path where documentation files will be generated
   * @param {string} serviceName - The name of the service
   * @param {string} description - The description of the service
   * @param {string} servers - The servers of the service (comma separated)
@@ -15,8 +16,6 @@
   * 
   */
 
-var docsPath = __dirname + '/docs';
-
 const fs = require('fs');
 const express = require('express');
 const app = express();
@@ -25,14 +24,16 @@ const expressJSDocSwagger = require('express-jsdoc-swagger');
 
 var args = process.argv.slice(2);
 
-var PATH_TO_JSON = docsPath + '/openapi.json';
-
 if (args.length === 0) {
   throw new Error("No service name provided in cli parameter")
 }
-var serviceName = args[0]
-var description = args[1] || "No description"
-var servers = args[2] || "https://example.com/dev"
+var destinationPath = args[0]
+var serviceName = args[1]
+var description = args[2] || "No description"
+var servers = args[3] || "https://example.com/dev"
+
+var PATH_TO_JSON = destinationPath + '/openapi.json';
+
 servers = servers.split(',').map(function (item) {
   return {
     url: item
@@ -57,15 +58,15 @@ const listener = expressJSDocSwagger(app)(options);
 
 listener.on('finish', swaggerObject => {
 
-  if (!fs.existsSync(docsPath)){
-    fs.mkdirSync(docsPath);
+  if (!fs.existsSync(destinationPath)){
+    fs.mkdirSync(destinationPath);
   }
 
   fs.writeFile(PATH_TO_JSON, JSON.stringify(swaggerObject, null, 2), async (err) => {
     if (err) throw err;
     
-    console.log('The file has been saved!');
-    var cmdGenDoc = "node "+__dirname+"/node_modules/swagger-to-static/index.js "+PATH_TO_JSON+" "+docsPath;
+    console.log('The file has been saved to '+destinationPath);
+    var cmdGenDoc = "node "+__dirname+"/node_modules/swagger-to-static/index.js "+PATH_TO_JSON+" "+destinationPath;
 
     await runCmd(cmdGenDoc);
   });

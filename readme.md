@@ -19,18 +19,19 @@ or
 
 The generated openapi.json file & swagger will be located in the docs folder
 
+- @param {string} destinationPath - The path where documentation files will be generated
 - @param {string} serviceName - The name of the service
 - @param {string} description - The description of the service
 - @param {string} servers - The servers of the service (comma separated)
 
-Usage: ```node index.js <serviceName> <description> <servers>```
+Usage: ```node index.js <destinationPath> <serviceName> <description> <servers>```
 
-Example: ```node ./node_modules/annotations-to-swagger/index.js myService "This is a description of my service" "https://example.com/dev,https://example.com/prod"```
+Example: ```node ./node_modules/annotations-to-swagger/index.js ./docs myService "This is a description of my service" "https://example.com/dev,https://example.com/prod"```
 
 serverless usage: 
 ``` 
 custom:
     scriptable:
         hooks:
-            before:package:initialize: node ./node_modules/annotations-to-swagger/index.js ${self:service} "${self:provider.environment.DOC_DESCRIPTION}" "${self:provider.environment.DOC_SERVERS}"
+            before:package:initialize: node ./node_modules/annotations-to-swagger/index.js ./docs ${self:service} "${self:provider.environment.DOC_DESCRIPTION}" "${self:provider.environment.DOC_SERVERS}"
 ```
