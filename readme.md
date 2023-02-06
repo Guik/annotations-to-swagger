@@ -9,7 +9,7 @@ Ideal for integrating with serverless scriptable hooks to generate documentation
 
 ## Install
 
-`npm install annotations-to-swagger --save --include=dev`
+`npm install annotations-to-swagger --save-dev`
 
 or
 
