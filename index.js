@@ -3,11 +3,14 @@
   /* 
   * Scan js files in the current directory and generate an openapi.json file
   * Then generate the swagger documentation using swagger-to-static
-
+  * 
+  * The plugin try to find the root application path by looking for the node_modules folder
+  * 
   * @param {string} serviceName - The name of the service
   * @param {string} description - The description of the service
   * @param {string} servers - The servers of the service (comma separated)
-  * @param {string} destinationPath - The path where documentation files will be generated (o)
+  * @param {string} destinationPath - The path where documentation files will be generated (default: ./docs)
+  * @param {string} pathToScan - The path to scan for js files (default: ./*.js)
   * 
   * Usage: node index.js <serviceName> <description> <servers>
   * 
@@ -36,6 +39,7 @@ var serviceName = args[0]
 var description = args[1] || "No description"
 var servers = args[2] || "https://example.com/dev"
 var destinationPath = applicationPath+(args[3] || "/docs")
+var pathToScan = applicationPath+(args[4] || "/*.js")
 
 var PATH_TO_JSON = destinationPath + '/openapi.json';
 
@@ -52,7 +56,7 @@ const options = {
     description: description
   },
   baseDir: applicationPath,  // Base directory which we use to locate your JSDOC files
-  filesPattern: [applicationPath+'/*.js'],  // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
+  filesPattern: [pathToScan],  // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
   swaggerUIPath: destinationPath,  // URL where SwaggerUI will be rendered
   exposeSwaggerUI: true,   // Expose OpenAPI UI
   exposeApiDocs: false,   // Expose Open API JSON Docs documentation in `apiDocsPath` path.
