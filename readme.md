@@ -24,12 +24,14 @@ The generated openapi.json file & swagger will be located in the docs folder
 - @param {string} servers - The servers of the service (comma separated)
 - @param {string} destinationPath - The path where documentation files will be generated (optional, default: ./docs)
 
-
+Command line:
 Usage: ```node ./node_modules/annotations-to-swagger/index.js <serviceName> <description> <servers> <destinationPath> <folderToScan>```
 
 Example: ```node ./node_modules/annotations-to-swagger/index.js myServiceName "This is a description of my service" "https://example.com/dev,https://example.com/prod" ./docs ./src/*.js```
 
-serverless usage: 
+Serverless usage:
+Using hook scriptable (https://www.serverless.com/plugins/serverless-scriptable-plugin) to generate documentation on the fly.
+
 ``` 
 environment:
     DOC_DESCRIPTION: "myServiceName"
